@@ -1,0 +1,55 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat&family=Oswald:wght@400;600&family=Pacifico&family=Rubik:ital,wght@0,500;0,700;1,700;1,900&display=swap');
+
+//fonts
+$heading: "Rubik", sans-serif;
+$sub-heading: "Oswald", sans-serif;
+$body: 'Montserrat', sans-serif;
+$cursive: 'Pacifico', cursive;
+
+//colors
+$bg: #f2fafe;
+$primary: #0181d3;
+$secondary: #7ec6f2;
+$accent: #401b72;
+$test2: #4cc9f0;
+:root {
+  $bg: #f2fafe;
+  $primary: #0181d3;
+  $secondary: #7ec6f2;
+  $accent: #401b72;
+  $test: #2cacde;
+}
+
+
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: $bg;
+  color: $primary;
+  overflow-x: hidden;
+  font-family: "Rubik", sans-serif;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+ul {
+  list-style: none;
+}
+
+.width {
+  width: min(90%, 1300px);
+  margin-inline: auto;
+}
