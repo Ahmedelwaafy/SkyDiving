@@ -1,9 +1,12 @@
 import {
+  faCalendar,
   faCalendarCheck,
+  faCalendarDays,
   faChevronDown,
   faCirclePlay,
   faLocationDot,
   faMagnifyingGlassLocation,
+  faPeopleGroup,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useEffect, useReducer } from "react";
@@ -41,6 +44,48 @@ function Hero() {
           search: action.payload,
         };
       }
+      case "setNoLocationFound": {
+        return {
+          ...state,
+          noLocationFound: action.payload,
+        };
+      }
+      case "setDate": {
+        return {
+          ...state,
+          date: action.payload,
+        };
+      }
+      case "setDateColorChange": {
+        return {
+          ...state,
+          dateColorChange: action.payload,
+        };
+      }
+      case "setPersonsNum": {
+        return {
+          ...state,
+          personsNum: action.payload,
+        };
+      }
+      case "setPersonsNumChange": {
+        return {
+          ...state,
+          personsNumChange: action.payload,
+        };
+      }
+      case "setIncreasePersonsNum": {
+        return {
+          ...state,
+          personsNum: state.personsNum + 1,
+        };
+      }
+      case "setDecreasePersonsNum": {
+        return {
+          ...state,
+          personsNum: state.personsNum - 1,
+        };
+      }
     }
     throw Error("Unknown action: " + action.type);
   }
@@ -50,6 +95,11 @@ function Hero() {
     showLocation: false,
     selectedLocation: "",
     search: "",
+    noLocationFound: false,
+    date: "2023-05-23",
+    dateColorChange: false,
+    personsNum: 1,
+    personsNumChange: false,
   });
   useEffect(() => {
     try {
@@ -67,8 +117,25 @@ function Hero() {
   }, []);
 
   function handleSearchChange(e) {
-    console.log(state.locations);
-    console.log(e.target.value);
+    for (let i = 0; i < state.locations.length; i++) {
+      if (
+        state.locations[i].name
+          .toString()
+          .toLocaleUpperCase()
+          .startsWith(e.target.value.toString().toLocaleUpperCase())
+      ) {
+        dispatch({
+          type: "setNoLocationFound",
+          payload: false,
+        });
+        break;
+      } else {
+        dispatch({
+          type: "setNoLocationFound",
+          payload: true,
+        });
+      }
+    }
   }
   return (
     <div
@@ -76,15 +143,15 @@ function Hero() {
      justify-center items-center"
     >
       <section
-        className="hero-content-container relative h-full width flex flex-col items-center justify-center gap-7
+        className="hero-content-container relative h-full width flex flex-col items-center justify-center gap-10
        "
       >
-        <h3 className="cursive-text text-[200px] opacity-30 fixed top-10 right-1/2 translate-x-1/2 font-cursive pointer-events-none ">
+        <h3 className="cursive-text text-[15vw] opacity-30 fixed top-10 right-1/2 translate-x-1/2 font-cursive pointer-events-none ">
           {" "}
           SkyDiving
         </h3>
         <FontAwesomeIcon
-          className=" play-icon absolute bottom-1/2 right-1/2 translate-x-1/2 translate-y-1/2 text-8xl cursor-pointer hover:scale-110 duration-300 opacity-70 hover:opacity-100 z-[0]"
+          className=" play-icon absolute bottom-1/2 right-1/2 translate-x-1/2 translate-y-1/2 text-8xl cursor-pointer hover:scale-110 duration-300 opacity-70 hover:opacity-100 z-[20]"
           icon={faCirclePlay}
         />
 
@@ -105,14 +172,14 @@ function Hero() {
           </h2>
         </div>
         <div className="cta-wrapper">
-          <button className="hero-cta">Discover Plans</button>
+          <button className="hero-cta mt-5">Discover Plans</button>
         </div>
 
         {/**Booking ------------*/}
-        <div className="booking w-5/6 h-40  absolute bottom-0 ">
-          <div className="booking-relative relative w-full h-full bg-bg rounded-tr-[100px]  flex justify-between items-center ">
+        <div className="booking w-5/6 mx-auto h-40 translate-y-1/2 z-40 shadow-lg   absolute bottom-0 ">
+          <div className="booking-relative-for-filter relative w-full h-full bg-bg rounded-tr-[100px]  flex justify-between items-center ">
             {/**filter ----------- */}
-            <div className="filter-absolute absolute rounded-t-[100px]  h-20 w-80 left-0 top-0 -translate-y-[100%] bg-red-300 flex justify-between items-center overflow-hidden">
+            <div className="filter-absolute absolute rounded-t-[100px]  h-20 w-80 left-0 top-0 -translate-y-[100%]  flex justify-between items-center overflow-hidden">
               <button
                 onClick={() =>
                   dispatch({
@@ -144,8 +211,8 @@ function Hero() {
                 Tandem
               </button>
             </div>
-            {/**Booking Options ----------- */}
-            <div className="booking-text font-cursive text-xl w-72 h-full  flex justify-center items-center leading-relaxed px-5">
+            {/**Booking left message ----------- */}
+            <div className="booking-text-left font-cursive text-xl w-72 h-full  flex justify-center items-center leading-relaxed px-5">
               Book Your Amazing Skydive. ADVENTURE AWAITS!!
             </div>
 
@@ -208,7 +275,7 @@ function Hero() {
                           />
                           <input
                             value={state.search}
-                            autoComplete
+                            autoComplete="on"
                             onChange={(e) => {
                               dispatch({
                                 type: "setSearch",
@@ -221,6 +288,11 @@ function Hero() {
                             placeholder="Search location"
                           />
                         </div>
+                        {state.noLocationFound && (
+                          <span className="text-center w-full text-sm text-red-500">
+                            No location found
+                          </span>
+                        )}
                         {state.locations?.map((location) => (
                           <li
                             className={`pl-4 py-1 cursor-pointer hover:bg-white w-full truncate duration-300 ${
@@ -246,6 +318,10 @@ function Hero() {
                                 type: "setShowLocations",
                                 payload: false,
                               });
+                              dispatch({
+                                type: "setSearch",
+                                payload: "",
+                              });
                             }}
                           >
                             {location.name}
@@ -253,6 +329,108 @@ function Hero() {
                         ))}
                       </ul>
                     </div>
+                  </div>
+                </div>
+              </div>
+
+              {/**Calender----------- */}
+
+              <div className="booking-calender w-1/3 h-full bg-bg flex flex-col items-start justify-center gap-4 px-5 ">
+                <div className="booking-calender-tile  flex justify-start items-center gap-3 text-secondary">
+                  <FontAwesomeIcon icon={faCalendarDays} /> <span>Date</span>
+                </div>
+
+                {/**calender - Option -Select----------- */}
+                <div
+                  className={`calendar-relative relative rounded-2xl border-2 border-primary  w-full  h-8 flex justify-center items-center  px-4 ${
+                    state.dateColorChange ? "text-primary" : "text-secondary"
+                  }`}
+                >
+                  <FontAwesomeIcon
+                    className="calendar-icon absolute right-4  bottom-1/2 translate-y-1/2 text-lg pointer-events-none cursor-pointer "
+                    icon={faCalendar}
+                  />
+                  <input
+                    id="date"
+                    onChange={(e) => {
+                      dispatch({
+                        type: "setDate",
+                        payload: e.target.value,
+                      });
+                      dispatch({
+                        type: "setDateColorChange",
+                        payload: true,
+                      });
+                    }}
+                    value={state.date}
+                    className={`bg-transparent outline-none w-full `}
+                    type="date"
+                  />
+                </div>
+              </div>
+
+              {/**Persons----------- */}
+
+              <div className="booking-Persons w-1/3 h-full bg-bg flex flex-col items-start justify-center gap-4 px-5 ">
+                <div className="booking-Persons-tile  flex justify-start items-center gap-3 text-secondary">
+                  <FontAwesomeIcon icon={faPeopleGroup} />{" "}
+                  <span>Total persons</span>
+                </div>
+
+                {/**Persons - Option -Select----------- */}
+                <div className="input-persons-number rounded-2xl border-2 border-primary  w-full h-8  flex justify-between items-center gap-4 px-4">
+                  <input
+                    onChange={(e) => {
+                      dispatch({
+                        type: "setPersonsNum",
+                        payload: parseInt(e.target.value),
+                      });
+                      dispatch({
+                        type: "setPersonsNumChange",
+                        payload: true,
+                      });
+                    }}
+                    value={state.personsNum}
+                    className={` outline-none bg-transparent w-1/2 ${
+                      state.personsNumChange ? "text-primary" : "text-secondary"
+                    }`}
+                    type="number"
+                  />
+
+                  {/**persons-controls */}
+                  <div className="persons-controls w-1/2  flex justify-end items-center gap-6">
+                    <span
+                      onClick={() => {
+                        dispatch({
+                          type: "setDecreasePersonsNum",
+                        });
+                        dispatch({
+                          type: "setPersonsNumChange",
+                          payload: true,
+                        });
+                      }}
+                      className={`decrement rounded-full  text-bg flex justify-center items-center w-[22px] h-[22px] font-bold text-lg cursor-pointer ${
+                        state.personsNum == 1
+                          ? "bg-secondary pointer-events-none"
+                          : "bg-primary"
+                      }`}
+                    >
+                      -
+                    </span>
+                    <span
+                      onClick={() => {
+                        dispatch({
+                          type: "setIncreasePersonsNum",
+                        });
+                        dispatch({
+                          type: "setPersonsNumChange",
+                          payload: true,
+                        });
+                      }}
+                      className="increment rounded-full bg-primary text-bg flex justify-center items-center w-[22px] h-[22px] font-bold text-lg cursor-pointer"
+                    >
+                      +
+                    </span>
                   </div>
                 </div>
               </div>

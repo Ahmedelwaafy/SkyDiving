@@ -1,51 +1,86 @@
-import { faChevronDown, faHourglass2, faPlaneUp } from "@fortawesome/free-solid-svg-icons";
+import {
+  faChevronDown,
+  faHourglass2,
+  faPlaneUp,
+} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Link } from "react-router-dom";
 import { useReducer } from "react";
-
+import { useEffect } from "react";
 
 function Navbar() {
   function reducer(state, action) {
-   switch (action.type) {
-     case "setShowMobileMenu": {
-       return {
-         ...state,
-         showMobileMenu: action.payload,
-       };
-     }
-     case "changed_name": {
-       return {
-         name: action.nextName,
-         age: state.age,
-       };
-     }
-   }
-   throw Error("Unknown action: " + action.type);
+    switch (action.type) {
+      case "setShowMobileMenu": {
+        return {
+          ...state,
+          showMobileMenu: action.payload,
+        };
+      }
+      case "setScroll": {
+        return {
+          ...state,
+          scroll: action.payload,
+        };
+      }
+    }
+    throw Error("Unknown action: " + action.type);
   }
-    const [state, dispatch] = useReducer(reducer, { showMobileMenu:false});
+  const [state, dispatch] = useReducer(reducer, {
+    showMobileMenu: false,
+    scroll: false,
+  });
 
   function handleBurgerChecked(e) {
-    if(e.target.checked){
+    if (e.target.checked) {
       dispatch({
         type: "setShowMobileMenu",
         payload: true,
       });
-    }else{
+    } else {
       dispatch({
         type: "setShowMobileMenu",
         payload: false,
       });
     }
   }
+
+  useEffect(() => {
+    function handleScroll() {
+      if (window.scrollY > 50) {
+        dispatch({
+          type: "setScroll",
+          payload: true,
+        });
+      } else {
+        dispatch({
+          type: "setScroll",
+          payload: false,
+        });
+      }
+    }
+    window.addEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
+
   return (
     <>
-      <header className="fixed bg-bg/70 w-full border-b-2 border-x-2  border-x-secondary border-b-secondary h-20 rounded-b-[100px] hover:bg-secondary hover:text-bg duration-200 ease-linear group  hover:border-x-bg hover:border-b-bg overflow-hidden shadow-sm shadow-secondary/50 hover:shadow-bg z-50">
+      <header
+        className={`fixed bg-bg/70 w-full border-b-2 border-x-2  border-x-secondary border-b-secondary h-20 rounded-b-[100px] hover:bg-secondary hover:text-bg duration-200 ease-linear group  hover:border-x-bg hover:border-b-bg overflow-hidden shadow-sm shadow-secondary/50 hover:shadow-bg z-50 ${
+          state.scroll && "bg-secondary text-bg border-x-bg border-b-bg"
+        }`}
+      >
         {/**Desktop Nav */}
 
         <nav className="width flex h-full justify-between items-center">
           {/**logo */}
-          <div className="logo flex items-center justify-center gap-2 text-lg font-bold cursor-pointer duration-300 hover:scale-110 ">
-            <FontAwesomeIcon icon={faPlaneUp} />
+          <div className="logo  flex items-center justify-center gap-2 text-lg font-bold cursor-pointer duration-300 hover:scale-110 ">
+            <FontAwesomeIcon
+              className="hover:-translate-y-14 transition-transform duration-300 ease-linear"
+              icon={faPlaneUp}
+            />
             <span>SkyDiving</span>
           </div>
           {/** Nav Menu */}
@@ -83,7 +118,7 @@ function Navbar() {
             </svg>
           </label>
           {/** Nav Btns */}
-          <Link className="px-3 bg-primary h-full flex items-center justify-center text-bg font-bold text-lg duration-200 ease-linear group-hover:bg-bg group-hover:text-secondary   ">
+          <Link className="px-3 bg-accent h-full flex items-center justify-center text-bg font-bold text-lg duration-200 ease-linear group-hover:bg-bg group-hover:text-accent   ">
             Book Now
           </Link>{" "}
         </nav>

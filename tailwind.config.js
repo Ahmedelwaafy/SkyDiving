@@ -33,5 +33,5 @@ module.exports = {
       xs: { max: "375px" },
     },
   },
-  plugins: [],
+  plugins: [require("tailwindcss-scoped-groups")],
 };
