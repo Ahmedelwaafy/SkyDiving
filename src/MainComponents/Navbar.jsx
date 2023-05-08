@@ -39,7 +39,7 @@ function Navbar() {
   }
   return (
     <>
-      <header className="fixed bg-bg/70 w-full border-b-2 border-x-2  border-x-secondary border-b-secondary h-20 rounded-b-[100px] hover:bg-secondary hover:text-bg duration-200 ease-linear group  hover:border-x-bg hover:border-b-bg overflow-hidden shadow-sm shadow-secondary/50 hover:shadow-bg ">
+      <header className="fixed bg-bg/70 w-full border-b-2 border-x-2  border-x-secondary border-b-secondary h-20 rounded-b-[100px] hover:bg-secondary hover:text-bg duration-200 ease-linear group  hover:border-x-bg hover:border-b-bg overflow-hidden shadow-sm shadow-secondary/50 hover:shadow-bg z-50">
         {/**Desktop Nav */}
 
         <nav className="width flex h-full justify-between items-center">

@@ -1,10 +1,12 @@
 import {
   faCalendarCheck,
+  faChevronDown,
   faCirclePlay,
   faLocationDot,
+  faMagnifyingGlassLocation,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useReducer } from "react";
+import { useEffect, useReducer } from "react";
 
 function Hero() {
   function reducer(state, action) {
@@ -15,16 +17,59 @@ function Hero() {
           filter: action.payload,
         };
       }
-      case "changed_name": {
+      case "setLocations": {
         return {
-          name: action.nextName,
-          age: state.age,
+          ...state,
+          locations: action.payload,
+        };
+      }
+      case "setShowLocations": {
+        return {
+          ...state,
+          showLocation: action.payload,
+        };
+      }
+      case "setSelectedLocation": {
+        return {
+          ...state,
+          selectedLocation: action.payload,
+        };
+      }
+      case "setSearch": {
+        return {
+          ...state,
+          search: action.payload,
         };
       }
     }
     throw Error("Unknown action: " + action.type);
   }
-  const [state, dispatch] = useReducer(reducer, { filter: "single" });
+  const [state, dispatch] = useReducer(reducer, {
+    filter: "single",
+    locations: [],
+    showLocation: false,
+    selectedLocation: "",
+    search: "",
+  });
+  useEffect(() => {
+    try {
+      fetch("https://restcountries.com/v2/all?fields=name")
+        .then((res) => res.json())
+        .then((data) =>
+          dispatch({
+            type: "setLocations",
+            payload: data,
+          })
+        );
+    } catch (error) {
+      console.log(error);
+    }
+  }, []);
+
+  function handleSearchChange(e) {
+    console.log(state.locations);
+    console.log(e.target.value);
+  }
   return (
     <div
       className="h-screen  w-full pt-20 flex
@@ -103,13 +148,113 @@ function Hero() {
             <div className="booking-text font-cursive text-xl w-72 h-full  flex justify-center items-center leading-relaxed px-5">
               Book Your Amazing Skydive. ADVENTURE AWAITS!!
             </div>
+
+            {/**booking-options----------- */}
             <div className="booking-options w-full h-full bg-red-400 flex justify-between items-center">
-              <div className="booking-location w-1/3 h-full bg-test2 flex flex-col items-center justify-center gap-4">
-                <div className="booking-location-tile flex justify-start items-center gap-3 opacity-60">
+              {/**Location----------- */}
+
+              <div className="booking-location w-1/3 h-full bg-bg flex flex-col items-start justify-center gap-4 px-5 ">
+                <div className="booking-location-tile  flex justify-start items-center gap-3 text-secondary">
                   <FontAwesomeIcon icon={faLocationDot} />
                   <span>Location</span>
                 </div>
-                <div className="booking-location-option"></div>
+                {/**Location - Option -Select----------- */}
+
+                <div className="booking-location-option w-full h-auto ">
+                  {/**selected-location----------- */}
+                  <div className="selected-location-location-relative relative w-full">
+                    <div
+                      onClick={() =>
+                        dispatch({
+                          type: "setShowLocations",
+                          payload: !state.showLocation,
+                        })
+                      }
+                      className={`selected-location flex justify-between px-4 items-center gap-5 rounded-2xl border-2 border-primary  w-full h-8  cursor-pointer ${
+                        state.selectedLocation
+                          ? "text-primary"
+                          : "text-secondary "
+                      } `}
+                    >
+                      <span className={`  text-sm  truncate`}>
+                        {state.selectedLocation
+                          ? state.selectedLocation
+                          : "Select location"}
+                      </span>{" "}
+                      <FontAwesomeIcon
+                        className={`transition-all duration-200 ease-in-out ${
+                          state.showLocation ? "rotate-180" : "rotate-0"
+                        }`}
+                        icon={faChevronDown}
+                      />
+                    </div>
+                    {/**locations----------- */}
+                    <div
+                      className={`locations-absolute  absolute z-40 top-7 left-0 w-full transition-all duration-200 ease-linear rounded-2xl overflow-x-hidden ${
+                        state.showLocation
+                          ? "max-h-72 overflow-y-auto mt-5 bg-secondary"
+                          : "max-h-0 overflow-y-hidden"
+                      }`}
+                    >
+                      <ul
+                        className={`locations flex flex-col gap-3 relative items-start pb-3  ${
+                          state.showLocation ? "opacity-100" : "opacity-0"
+                        }`}
+                      >
+                        <div className="search-locations-input-sticky sticky top-0 h-12 w-full bg-white shadow-sm flex justify-between px-4 gap-5 items-center">
+                          <FontAwesomeIcon
+                            className="text-xl text-secondary"
+                            icon={faMagnifyingGlassLocation}
+                          />
+                          <input
+                            value={state.search}
+                            autoComplete
+                            onChange={(e) => {
+                              dispatch({
+                                type: "setSearch",
+                                payload: e.target.value,
+                              });
+                              handleSearchChange(e);
+                            }}
+                            className=" outline-none text-sm font-normal text-secondary placeholder:text-sm placeholder:font-normal placeholder:text-secondary "
+                            type="text"
+                            placeholder="Search location"
+                          />
+                        </div>
+                        {state.locations?.map((location) => (
+                          <li
+                            className={`pl-4 py-1 cursor-pointer hover:bg-white w-full truncate duration-300 ${
+                              location.name
+                                .toLocaleLowerCase()
+                                .startsWith(state.search.toLocaleLowerCase())
+                                ? "block"
+                                : "hidden"
+                            }
+                            ${
+                              state.selectedLocation == location.name
+                                ? "bg-white"
+                                : ""
+                            }
+                            `}
+                            key={location.name}
+                            onClick={() => {
+                              dispatch({
+                                type: "setSelectedLocation",
+                                payload: location.name,
+                              });
+                              dispatch({
+                                type: "setShowLocations",
+                                payload: false,
+                              });
+                            }}
+                          >
+                            {location.name}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
             <div className="booking-btn w-48 h-full bg-accent flex flex-col items-center justify-center gap-5 rounded-tr-[100px] text-bg cursor-pointer duration-300 hover:opacity-90">
