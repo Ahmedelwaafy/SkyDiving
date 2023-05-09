@@ -1,9 +1,11 @@
 import { faChevronRight } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import Slider from "react-slick";
 
 function MainSlider() {
+  const [push, setPush] = useState(true);
+  console.log(push);
   const slider = useRef(null);
   function SampleNextArrow(props) {
     const { className, style, onClick } = props;
@@ -32,27 +34,30 @@ function MainSlider() {
     infinite: true,
     speed: 500,
     autoplay: true,
+
     pauseOnHover: true,
     focusOnSelect: true,
-    slidesToShow: 4,
+    slidesToShow: 3,
     slidesToScroll: 1,
     initialSlide: 0,
     nextArrow: <SampleNextArrow />,
     prevArrow: <SamplePrevArrow />,
     responsive: [
       {
-        breakpoint: 1024,
+        breakpoint: 1150,
         settings: {
-          slidesToShow: 3,
-          slidesToScroll: 1,
+          slidesToShow: 2,
+          slidesToScroll: 2,
+          infinite: true,
+          dots: true,
         },
       },
       {
-        breakpoint: 600,
+        breakpoint: 768,
         settings: {
-          slidesToShow: 2,
+          slidesToShow: 1,
           slidesToScroll: 1,
-          initialSlide: 2,
+          initialSlide: 0,
         },
       },
       {
@@ -76,7 +81,7 @@ function MainSlider() {
         "Experience the thrill of a lifetime and combine it with a journey through history by embarking on a skydiving adventure in Egypt.",
     },
     {
-      img: "./assets/images/1.jpg",
+      img: "/assets/images/2.jpg",
 
       location: "Germany",
       title: "Skydiving Egypt – Over The Pyramids",
@@ -86,7 +91,7 @@ function MainSlider() {
         "Experience the thrill of a lifetime and combine it with a journey through history by embarking on a skydiving adventure in Egypt.",
     },
     {
-      img: "./assets/images/1.jpg",
+      img: "./assets/images/3.jpg",
 
       location: "Egypt",
       title: "Skydiving Egypt – Over The Pyramids",
@@ -96,7 +101,7 @@ function MainSlider() {
         "Experience the thrill of a lifetime and combine it with a journey through history by embarking on a skydiving adventure in Egypt.",
     },
     {
-      img: "./assets/images/1.jpg",
+      img: "./assets/images/4.jpg",
 
       location: "Egypt",
       title: "Skydiving Egypt – Over The Pyramids",
@@ -106,7 +111,7 @@ function MainSlider() {
         "Experience the thrill of a lifetime and combine it with a journey through history by embarking on a skydiving adventure in Egypt.",
     },
     {
-      img: "./assets/images/1.jpg",
+      img: "./assets/images/5.jpg",
 
       location: "Egypt",
       title: "Skydiving Egypt – Over The Pyramids",
@@ -116,7 +121,7 @@ function MainSlider() {
         "Experience the thrill of a lifetime and combine it with a journey through history by embarking on a skydiving adventure in Egypt.",
     },
     {
-      img: "./assets/images/1.jpg",
+      img: "./assets/images/6.jpg",
 
       location: "Egypt",
       title: "Skydiving Egypt – Over The Pyramids",
@@ -126,7 +131,7 @@ function MainSlider() {
         "Experience the thrill of a lifetime and combine it with a journey through history by embarking on a skydiving adventure in Egypt.",
     },
     {
-      img: "./assets/images/1.jpg",
+      img: "./assets/images/7.jpg",
 
       location: "Egypt",
       title: "Skydiving Egypt – Over The Pyramids",
@@ -136,7 +141,7 @@ function MainSlider() {
         "Experience the thrill of a lifetime and combine it with a journey through history by embarking on a skydiving adventure in Egypt.",
     },
     {
-      img: "./assets/images/1.jpg",
+      img: "./assets/images/8.jpg",
 
       location: "Egypt",
       title: "Skydiving Egypt – Over The Pyramids",
@@ -146,7 +151,7 @@ function MainSlider() {
         "Experience the thrill of a lifetime and combine it with a journey through history by embarking on a skydiving adventure in Egypt.",
     },
     {
-      img: "./assets/images/1.jpg",
+      img: "./assets/images/9.jpg",
 
       location: "Germany",
       title: "Skydiving Egypt – Over The Pyramids",
@@ -156,7 +161,7 @@ function MainSlider() {
         "Experience the thrill of a lifetime and combine it with a journey through history by embarking on a skydiving adventure in Egypt.",
     },
     {
-      img: "./assets/images/1.jpg",
+      img: "./assets/images/10.jpg",
 
       location: "Italy",
       title: "Skydiving Egypt – Over The Pyramids",
@@ -166,7 +171,7 @@ function MainSlider() {
         "Experience the thrill of a lifetime and combine it with a journey through history by embarking on a skydiving adventure in Egypt.",
     },
     {
-      img: "./assets/images/1.jpg",
+      img: "./assets/images/11.jpg",
 
       location: "France",
       title: "Skydiving Egypt – Over The Pyramids",
@@ -176,7 +181,7 @@ function MainSlider() {
         "Experience the thrill of a lifetime and combine it with a journey through history by embarking on a skydiving adventure in Egypt.",
     },
     {
-      img: "./assets/images/1.jpg",
+      img: "./assets/images/12.jpg",
 
       location: "England",
       title: "Skydiving Egypt – Over The Pyramids",
@@ -187,27 +192,26 @@ function MainSlider() {
     },
   ];
   return (
-    <section className="h-screen relative z-20 bg-bg w-full pt-20">
-      <div className="slider-container width h-full ">
-        <span>slider</span>
-        <div className="slider-title-arrows flex justify-between items-center w-full">
-          <h2>Best Offers</h2>
-          <div className="slider-arrows flex justify-end items-center gap-5">
+    <section className="relative z-20 w-full h-screen pt-20 bg-bg ">
+      <div className="flex-col items-center h-full slider-container width">
+        <div className="flex items-center justify-between sm:justify-center full sm my-14 slider-title-arrows ">
+          <h2 className="text-3xl font-bold text-accent ">Best Offers</h2>
+          <div className="flex items-center justify-end gap-5 slider-arrows sm:hidden">
             <div
               onClick={() => slider.current.slickPrev()}
-              className="slider-prev w-10 h-10 bg-accent text-bg flex justify-center items-center rounded-l-full cursor-pointer duration-300 hover:opacity-90 active:scale-90"
+              className="flex items-center justify-center w-10 h-10 duration-300 rounded-l-full cursor-pointer slider-prev bg-accent text-bg hover:opacity-90 active:scale-90"
             >
               <FontAwesomeIcon
-                className="rotate-180 text-lg font-bold"
+                className="text-lg font-bold rotate-180"
                 icon={faChevronRight}
               />
             </div>
             <div
               onClick={() => slider.current.slickNext()}
-              className="slider-prev w-10 h-10 bg-accent text-bg flex justify-center items-center rounded-r-full cursor-pointer duration-300 hover:opacity-90 active:scale-90"
+              className="flex items-center justify-center w-10 h-10 duration-300 rounded-r-full cursor-pointer slider-prev bg-accent text-bg hover:opacity-90 active:scale-90"
             >
               <FontAwesomeIcon
-                className=" text-lg font-bold"
+                className="text-lg font-bold "
                 icon={faChevronRight}
               />
             </div>
@@ -218,33 +222,45 @@ function MainSlider() {
           {offers.map((offer) => (
             <div
               key={offer.people}
-              className="slide-wrapper-relative relative w-[350px] md:w-[300px] h-96 bg-red-200  overflow-hidden rounded-[70px]"
+              className="slide-wrapper-relative relative w-[350px] max-w-[350px] sm:w-[300px] sm:max-w-[300px] h-[420px]    overflow-hidden rounded-[70px]"
             >
-              <div className="slide-img-wrapper  bg-red-400 w-full h-full ">
+              <div className="w-full h-full slide-img-wrapper ">
                 {/**
-              <img src={offer.img} alt={offer.img} />
-               * 
-               */}
+                 * 
+                 <img
+                 className="object-cover w-full h-full "
+                 src="https://unsplash.com/photos/O6TrpoUjrls"
+                 alt="555555555"
+                 />
+                */}
+                <img
+                  className="object-cover w-full h-full object-top "
+                  src={offer.img}
+                  alt={offer.img}
+                />
               </div>
-              <div className="slide-content-absolute absolute bottom-8 md:bottom-0 w-3/4 md:w-full h-3/4 bg-secondary right-1/2 translate-x-1/2 rounded-[50px] translate-y-[40%] md:translate-y-[0%] transition-all duration-300 ease-linear hover:translate-y-0 flex flex-col items-start justify-start p-6 gap-4 text-white">
-                <p className="slide-location text-sm tracking-wider font-cursive">
+              <div
+                onClick={() => setPush(!push)}
+                className={`slide-content-absolute absolute bottom-8 sm:bottom-0 w-3/4 sm:w-full h-3/4 sm:h-4/6  bg-secondary right-1/2 translate-x-1/2 rounded-[50px] translate-y-[50%]  sm:translate-y-[0%] transition-all duration-300 ease-in-out hover:translate-y-0 flex flex-col items-start justify-start p-6 gap-4 text-white`}
+              >
+                <p className="text-sm tracking-wider slide-location font-cursive">
                   {offer.location}
                 </p>
-                <h4 className="slide-title w-full truncate font-sub-heading text-accent font-bold">
+                <h4 className="w-full font-bold truncate slide-title font-sub-heading text-accent">
                   {" "}
                   {offer.title}
                 </h4>
-                <div className="slide-date-people flex justify-between items-center w-full">
-                  <p className="text-sm  font-body">{offer.date}</p>
-                  <p className="text-sm  font-body">
+                <div className="flex items-center justify-between w-full slide-date-people">
+                  <p className="text-sm font-body">{offer.date}</p>
+                  <p className="text-sm font-body">
                     {offer.people} Participants
                   </p>
                 </div>
-                <div className="slide-description text-sm   text-ellipsis overflow-hidden whitespace-break-spaces  w-full font-body">
-                  {offer.description.substring(0, 70)} ...
+                <div className="w-full overflow-hidden text-sm slide-description text-ellipsis whitespace-break-spaces font-body">
+                  {offer.description.substring(0, 65)} ...
                 </div>
-                <div className="slider-btn-wrapper w-full flex items-center justify-center  h-fit">
-                  <button className="hero-cta  px-10 py-3 bg-accent border-2 border-bg text-bg rounded-full">
+                <div className="flex items-center justify-center w-full slider-btn-wrapper h-fit">
+                  <button className="px-10 py-3 border-2 rounded-full hero-cta bg-accent border-bg text-bg">
                     Book Now{" "}
                   </button>
                 </div>

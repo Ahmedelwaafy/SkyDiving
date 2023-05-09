@@ -127,7 +127,9 @@ input[type="number"] {
   }
 }
 
-.slick-slider {
-  /* background-color: aquamarine; */
-  
+.slick-slide > div {
+  margin-inline: 25px;
+  display: flex;
+  justify-content: center;
 }
+
