@@ -24,8 +24,10 @@ module.exports = {
       },
     },
     screens: {
-      xxl: { max: "1500px" },
-      xl: { max: "1200px" },
+      xxxl: { max: "1500px" },
+      xxl: { max: "1300px" },
+      xl: { max: "1230px" },
+      alg: { max: "1088px" },
       lg: { max: "1060px" },
       amd: { max: "920px" },
       md: { max: "768px" },

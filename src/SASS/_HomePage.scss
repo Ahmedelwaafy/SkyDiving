@@ -133,3 +133,13 @@ input[type="number"] {
   justify-content: center;
 }
 
+/**Footer ------------*/
+
+.grid-auto-fit {
+  width: min(90%, 1300px);
+  margin-inline: auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+  justify-items: center;
+}

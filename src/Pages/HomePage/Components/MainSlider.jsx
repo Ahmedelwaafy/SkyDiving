@@ -49,7 +49,6 @@ function MainSlider() {
           slidesToShow: 2,
           slidesToScroll: 2,
           infinite: true,
-          dots: true,
         },
       },
       {
@@ -58,13 +57,7 @@ function MainSlider() {
           slidesToShow: 1,
           slidesToScroll: 1,
           initialSlide: 0,
-        },
-      },
-      {
-        breakpoint: 480,
-        settings: {
-          slidesToShow: 1,
-          slidesToScroll: 1,
+          infinite: true,
         },
       },
     ],
@@ -192,7 +185,7 @@ function MainSlider() {
     },
   ];
   return (
-    <section className="relative z-20 w-full h-screen pt-20 bg-bg ">
+    <section className="relative z-20 w-full h-auto pt-32 pb-40 bg-bg  ">
       <div className="flex-col items-center h-full slider-container width">
         <div className="flex items-center justify-between sm:justify-center full sm my-14 slider-title-arrows ">
           <h2 className="text-3xl font-bold text-accent ">Best Offers</h2>
@@ -222,26 +215,18 @@ function MainSlider() {
           {offers.map((offer) => (
             <div
               key={offer.people}
-              className="slide-wrapper-relative relative w-[350px] max-w-[350px] sm:w-[300px] sm:max-w-[300px] h-[420px]    overflow-hidden rounded-[70px]"
+              className="slide-wrapper-relative relative w-[350px] max-w-[350px] sm:w-[300px] sm:max-w-[300px] h-[420px]    overflow-hidden rounded-[70px] group"
             >
               <div className="w-full h-full slide-img-wrapper ">
-                {/**
-                 * 
-                 <img
-                 className="object-cover w-full h-full "
-                 src="https://unsplash.com/photos/O6TrpoUjrls"
-                 alt="555555555"
-                 />
-                */}
                 <img
-                  className="object-cover w-full h-full object-top "
+                  className="object-cover w-full h-full object-top group-hover:scale-110 duration-300"
                   src={offer.img}
                   alt={offer.img}
                 />
               </div>
               <div
                 onClick={() => setPush(!push)}
-                className={`slide-content-absolute absolute bottom-8 sm:bottom-0 w-3/4 sm:w-full h-3/4 sm:h-4/6  bg-secondary right-1/2 translate-x-1/2 rounded-[50px] translate-y-[50%]  sm:translate-y-[0%] transition-all duration-300 ease-in-out hover:translate-y-0 flex flex-col items-start justify-start p-6 gap-4 text-white`}
+                className={`slide-content-absolute absolute bottom-8 sm:bottom-0 w-3/4 sm:w-full h-3/4 sm:h-4/6  bg-secondary right-1/2 translate-x-1/2 rounded-[50px] translate-y-[47%]  sm:translate-y-[0%] transition-all duration-300 ease-in-out group-hover:translate-y-0 flex flex-col items-start justify-start p-6 gap-4 text-white`}
               >
                 <p className="text-sm tracking-wider slide-location font-cursive">
                   {offer.location}
