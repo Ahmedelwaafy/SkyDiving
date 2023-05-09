@@ -54,17 +54,12 @@
 /**Hero cta-------------*/
 
 .hero-cta {
-  padding: 1.1em 2em;
   background: none;
-  border: 2px solid var.$bg;
   font-size: 15px;
-  color: var.$bg;
   cursor: pointer;
   position: relative;
   overflow: hidden;
   transition: all 0.3s;
-  border-radius:  2rem 2rem 0 0;
-  background-color: var.$accent;
   font-weight: bolder;
   box-shadow: 0 2px 0 2px var.$secondary;
 }
@@ -130,4 +125,9 @@ input[type="number"] {
   .calendar-icon {
     display: none;
   }
+}
+
+.slick-slider {
+  /* background-color: aquamarine; */
+  
 }

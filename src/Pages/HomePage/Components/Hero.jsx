@@ -150,6 +150,7 @@ function Hero() {
           {" "}
           SkyDiving
         </h3>
+        
         <FontAwesomeIcon
           className=" play-icon absolute bottom-1/2 right-1/2 translate-x-1/2 translate-y-1/2 text-8xl cursor-pointer hover:scale-110 duration-300 opacity-70 hover:opacity-100 z-[20]"
           icon={faCirclePlay}
@@ -172,7 +173,7 @@ function Hero() {
           </h2>
         </div>
         <div className="cta-wrapper">
-          <button className="hero-cta mt-5">Discover Plans</button>
+          <button className="hero-cta mt-5 px-7 py-4 bg-accent border-2 border-bg text-bg rounded-t-full">Discover Plans</button>
         </div>
 
         {/**Booking ------------*/}
