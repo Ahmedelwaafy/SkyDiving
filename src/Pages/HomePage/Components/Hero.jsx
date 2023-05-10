@@ -144,8 +144,8 @@ function Hero() {
     //console.log(title.current);
     let uniqueRefs = [...new Set(ref.current)];
 
-    if (ref.current) console.log(ref.current);
-    if (ref.current) console.log(uniqueRefs);
+    //if (ref.current) console.log(ref.current);
+    //if (ref.current) console.log(uniqueRefs);
     const observer = new IntersectionObserver(handleIntersect, options);
     uniqueRefs.map((ref) => observer.observe(ref));
   }, []);
@@ -209,11 +209,8 @@ function Hero() {
             </span>
           </h2>
         </div>
-        <div className="cta-wrapper ">
-          <button
-            ref={pushRef}
-            className="hero-cta btn-delay btn-form-observer mt-5 px-7 py-4 bg-accent border-2 border-bg text-bg rounded-t-full"
-          >
+        <div ref={pushRef} className="cta-wrapper btn-delay btn-form-observer">
+          <button className="hero-cta  mt-5 px-7 py-4 bg-accent border-2 border-bg text-bg rounded-t-full">
             Discover Plans
           </button>
         </div>
