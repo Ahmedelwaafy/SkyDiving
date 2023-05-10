@@ -68,7 +68,7 @@ function Navbar() {
   return (
     <>
       <header
-        className={`fixed bg-bg/70 w-full border-b-2 border-x-2  border-x-secondary border-b-secondary h-20 rounded-b-[100px] hover:bg-secondary hover:text-bg duration-200 ease-linear group  hover:border-x-bg hover:border-b-bg overflow-hidden shadow-md shadow-primary/90 hover:shadow-bg z-50 ${
+        className={`fixed bg-bg/70 w-full border-b-2 border-x-2  border-x-secondary border-b-secondary h-20 rounded-b-[100px] hover:bg-secondary hover:text-bg duration-200 ease-linear group  hover:border-x-bg hover:border-b-bg overflow-hidden shadow-md shadow-primary/90 hover:shadow-bg/90 hover:shadow-sm  z-50 ${
           state.scroll && "bg-secondary text-bg border-x-bg border-b-bg"
         }`}
       >
@@ -108,11 +108,15 @@ function Navbar() {
             <input onChange={handleBurgerChecked} type="checkbox" />
             <svg viewBox="0 0 32 32">
               <path
-                className="line stroke-primary group-hover:stroke-bg line-top-bottom"
+                className={`line stroke-primary transition-all duration-300 ease-in-out  ${
+                  state.scroll && "stroke-bg"
+                }  group-hover:stroke-bg line-top-bottom`}
                 d="M27 10 13 10C10.8 10 9 8.2 9 6 9 3.5 10.8 2 13 2 15.2 2 17 3.8 17 6L17 26C17 28.2 18.8 30 21 30 23.2 30 25 28.2 25 26 25 23.8 23.2 22 21 22L7 22"
               ></path>
               <path
-                className="line stroke-primary group-hover:stroke-bg"
+                className={`line stroke-primary transition-all duration-300 ease-in-out  ${
+                  state.scroll && "stroke-bg"
+                }  group-hover:stroke-bg`}
                 d="M7 16 27 16"
               ></path>
             </svg>
@@ -127,7 +131,7 @@ function Navbar() {
       </header>
 
       <div
-        className={`fixed-mobile-nav fixed inset-0 top-20 h-mobile-menu w-full bg-secondary text-white hidden amd:flex  justify-center items-center transition-all duration-300 ease-in-out rounded-t-[100px] ${
+        className={`fixed-mobile-nav fixed inset-0 top-20 h-mobile-menu w-full bg-secondary text-white hidden amd:flex  justify-center items-center transition-all duration-300 ease-in-out rounded-t-[100px] z-50 ${
           state.showMobileMenu
             ? "pointer-events-auto opacity-100 translate-y-0"
             : "pointer-events-none opacity-0 translate-y-24"

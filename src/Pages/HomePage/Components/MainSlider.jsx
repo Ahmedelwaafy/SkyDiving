@@ -185,7 +185,7 @@ function MainSlider() {
     },
   ];
   return (
-    <section className="relative z-20 w-full h-auto pt-32 pb-40 bg-bg  ">
+    <section className="relative z-20 min-h-screen w-full h-auto pt-32 amd:pt-44 md:pt-64 pb-40 bg-bg  ">
       <div className="flex-col items-center h-full slider-container width">
         <div className="flex items-center justify-between sm:justify-center full sm my-14 slider-title-arrows ">
           <h2 className="text-3xl font-bold text-accent ">Best Offers</h2>

@@ -139,48 +139,45 @@ function Hero() {
   }
   return (
     <div
-      className="h-screen  w-full pt-20 flex
-     justify-center items-center"
+      className="h-screen min-h-screen relative lg:h-[110vh] amd:h-[115vh] md:h-[135vh]  w-full pt-20 flex
+     justify-center items-start"
     >
       <section
-        className="hero-content-container relative h-full width flex flex-col items-center justify-center gap-10
+        className="hero-content-container  h-mobile-menu width flex flex-col items-center  justify-start pt-20 md:justify-center md:pt-0 gap-10
        "
       >
-        <h3 className="cursive-text text-[15vw] opacity-30 fixed top-10 right-1/2 translate-x-1/2 font-cursive pointer-events-none ">
+        <h3 className="cursive-text text-[15vw] opacity-30 fixed top-10 xl:top-32 right-1/2 translate-x-1/2 font-cursive pointer-events-none ">
           {" "}
           SkyDiving
         </h3>
-        
-        <FontAwesomeIcon
-          className=" play-icon absolute bottom-1/2 right-1/2 translate-x-1/2 translate-y-1/2 text-8xl cursor-pointer hover:scale-110 duration-300 opacity-70 hover:opacity-100 z-[20]"
-          icon={faCirclePlay}
-        />
 
         <div className="heading-wrapper overflow-hidden  ">
           <h1
-            className="font-black text-7xl text-bg z-10 relative 
+            className="font-black text-7xl asm:text-5xl sm:text-3xl text-bg z-10 relative 
           pointer-events-none "
           >
             Ready. Set. GO!
           </h1>
         </div>
-        <div className="sub-heading-wrapper overflow-hidden w-3/5 ">
+        <div className="sub-heading-wrapper overflow-hidden w-3/5 lg:w-4/5 md:w-full">
           <h2
-            className="font-black text-4xl text-center font-sub-heading  text-bg z-10 relative italic  pointer-events-none
+            className="font-black text-4xl lg:text-3xl md:text-2xl sm:text-xl text-center font-sub-heading  text-bg z-10 relative italic  pointer-events-none
           "
           >
             READY TO FEEL ON TOP OF THE WORLD? WE CAN HELP YOU WITH THAT.
           </h2>
         </div>
         <div className="cta-wrapper">
-          <button className="hero-cta mt-5 px-7 py-4 bg-accent border-2 border-bg text-bg rounded-t-full">Discover Plans</button>
+          <button className="hero-cta mt-5 px-7 py-4 bg-accent border-2 border-bg text-bg rounded-t-full">
+            Discover Plans
+          </button>
         </div>
 
         {/**Booking ------------*/}
-        <div className="booking w-5/6 mx-auto h-40 translate-y-1/2 z-40 shadow-lg   absolute bottom-0 ">
-          <div className="booking-relative-for-filter relative w-full h-full bg-bg rounded-tr-[100px]  flex justify-between items-center ">
+        <div className="booking w-5/6 mx-auto h-40 xl:h-48 amd:h-72 md:h-fit translate-y-1/2 z-40    absolute bottom-0 ">
+          <div className="booking-relative-for-filter relative w-full h-full   ">
             {/**filter ----------- */}
-            <div className="filter-absolute absolute rounded-t-[100px]  h-20 w-80 left-0 top-0 -translate-y-[100%]  flex justify-between items-center overflow-hidden">
+            <div className="filter-absolute absolute rounded-t-[100px]  h-20 w-80 sm:w-full left-0 top-0 -translate-y-[100%]  flex justify-between items-center overflow-hidden">
               <button
                 onClick={() =>
                   dispatch({
@@ -212,233 +209,249 @@ function Hero() {
                 Tandem
               </button>
             </div>
-            {/**Booking left message ----------- */}
-            <div className="booking-text-left font-cursive text-xl w-72 h-full  flex justify-center items-center leading-relaxed px-5">
-              Book Your Amazing Skydive. ADVENTURE AWAITS!!
-            </div>
 
-            {/**booking-options----------- */}
-            <div className="booking-options w-full h-full bg-red-400 flex justify-between items-center">
-              {/**Location----------- */}
+            {/**booking-left-right-container-rounded ----------- */}
 
-              <div className="booking-location w-1/3 h-full bg-bg flex flex-col items-start justify-center gap-4 px-5 ">
-                <div className="booking-location-tile  flex justify-start items-center gap-3 text-secondary">
-                  <FontAwesomeIcon icon={faLocationDot} />
-                  <span>Location</span>
+            <div className="booking-left-right-container-rounded   flex justify-between items-center w-full h-full overflow- bg-bg shadow-lg amd:flex-col amd:items-start amd:justify-start md:gap-7 md:mt-5">
+              {/**Left Booking message and Options ----------- */}
+              <div className="left-message-options w-full h-full flex justify-between items-center xl:flex-col xl:items-start xl:justify-start md:gap-5 md:mt-5">
+                <div className="booking-message font-cursive text-xl w-72 h-full xl:h-2/6 flex justify-center items-center leading-relaxed px-5 md:text-sm xl:w-full text-center">
+                  Book Your Amazing Skydive. ADVENTURE AWAITS!!
                 </div>
-                {/**Location - Option -Select----------- */}
+                {/**location-calendar-persons-wrapper- ----------- */}
 
-                <div className="booking-location-option w-full h-auto ">
-                  {/**selected-location----------- */}
-                  <div className="selected-location-location-relative relative w-full">
-                    <div
-                      onClick={() =>
-                        dispatch({
-                          type: "setShowLocations",
-                          payload: !state.showLocation,
-                        })
-                      }
-                      className={`selected-location flex justify-between px-4 items-center gap-5 rounded-2xl border-2 border-primary  w-full h-8  cursor-pointer ${
-                        state.selectedLocation
-                          ? "text-primary"
-                          : "text-secondary "
-                      } `}
-                    >
-                      <span className={`  text-sm  truncate`}>
-                        {state.selectedLocation
-                          ? state.selectedLocation
-                          : "Select location"}
-                      </span>{" "}
-                      <FontAwesomeIcon
-                        className={`transition-all duration-200 ease-in-out ${
-                          state.showLocation ? "rotate-180" : "rotate-0"
-                        }`}
-                        icon={faChevronDown}
-                      />
+                <div className="location-calendar-persons-wrapper h-full w-full xl:w-full xl:h-4/6  flex justify-between items-center md:flex-col md:justify-start md:gap-5">
+                  {/**Location----------- */}
+
+                  <div className="booking-location w-1/3 h-full  flex flex-col items-start justify-center gap-4 px-3  md:w-full">
+                    <div className="booking-location-tile  flex justify-start items-center gap-3 text-secondary">
+                      <FontAwesomeIcon icon={faLocationDot} />
+                      <span>Location</span>
                     </div>
-                    {/**locations----------- */}
-                    <div
-                      className={`locations-absolute  absolute z-40 top-7 left-0 w-full transition-all duration-200 ease-linear rounded-2xl overflow-x-hidden ${
-                        state.showLocation
-                          ? "max-h-72 overflow-y-auto mt-5 bg-secondary"
-                          : "max-h-0 overflow-y-hidden"
-                      }`}
-                    >
-                      <ul
-                        className={`locations flex flex-col gap-3 relative items-start pb-3  ${
-                          state.showLocation ? "opacity-100" : "opacity-0"
-                        }`}
-                      >
-                        <div className="search-locations-input-sticky sticky top-0 h-12 w-full bg-white shadow-sm flex justify-between px-4 gap-5 items-center">
+                    {/**Location - Option -Select----------- */}
+
+                    <div className="booking-location-option w-full h-auto ">
+                      {/**selected-location----------- */}
+                      <div className="selected-location-location-relative relative w-full">
+                        <div
+                          onClick={() =>
+                            dispatch({
+                              type: "setShowLocations",
+                              payload: !state.showLocation,
+                            })
+                          }
+                          className={`selected-location flex justify-between px-4 items-center gap-5 rounded-2xl border-2 border-primary  w-full h-8  cursor-pointer ${
+                            state.selectedLocation
+                              ? "text-primary"
+                              : "text-secondary "
+                          } `}
+                        >
+                          <span className={`  text-sm  truncate`}>
+                            {state.selectedLocation
+                              ? state.selectedLocation
+                              : "Select location"}
+                          </span>{" "}
                           <FontAwesomeIcon
-                            className="text-xl text-secondary"
-                            icon={faMagnifyingGlassLocation}
-                          />
-                          <input
-                            value={state.search}
-                            autoComplete="on"
-                            onChange={(e) => {
-                              dispatch({
-                                type: "setSearch",
-                                payload: e.target.value,
-                              });
-                              handleSearchChange(e);
-                            }}
-                            className=" outline-none text-sm font-normal text-secondary placeholder:text-sm placeholder:font-normal placeholder:text-secondary "
-                            type="text"
-                            placeholder="Search location"
+                            className={`transition-all duration-200 ease-in-out ${
+                              state.showLocation ? "rotate-180" : "rotate-0"
+                            }`}
+                            icon={faChevronDown}
                           />
                         </div>
-                        {state.noLocationFound && (
-                          <span className="text-center w-full text-sm text-red-500">
-                            No location found
-                          </span>
-                        )}
-                        {state.locations?.map((location) => (
-                          <li
-                            className={`pl-4 py-1 cursor-pointer hover:bg-white w-full truncate duration-300 ${
-                              location.name
-                                .toLocaleLowerCase()
-                                .startsWith(state.search.toLocaleLowerCase())
-                                ? "block"
-                                : "hidden"
-                            }
+                        {/**locations----------- */}
+                        <div
+                          className={`locations-absolute  absolute z-50 top-7 left-0 w-56 transition-all duration-200 ease-linear rounded-2xl overflow-x-hidden ${
+                            state.showLocation
+                              ? "max-h-72 overflow-y-auto mt-5 bg-secondary"
+                              : "max-h-0 overflow-y-hidden"
+                          }`}
+                        >
+                          <ul
+                            className={`locations flex flex-col gap-3 relative items-start pb-3  ${
+                              state.showLocation ? "opacity-100" : "opacity-0"
+                            }`}
+                          >
+                            <div className="search-locations-input-sticky sticky top-0 h-12 w-full bg-white shadow-sm flex justify-between px-4 gap-5 items-center">
+                              <FontAwesomeIcon
+                                className="text-xl text-secondary"
+                                icon={faMagnifyingGlassLocation}
+                              />
+                              <input
+                                value={state.search}
+                                autoComplete="on"
+                                onChange={(e) => {
+                                  dispatch({
+                                    type: "setSearch",
+                                    payload: e.target.value,
+                                  });
+                                  handleSearchChange(e);
+                                }}
+                                className=" outline-none text-sm font-normal text-secondary placeholder:text-sm placeholder:font-normal placeholder:text-secondary "
+                                type="text"
+                                placeholder="Search location"
+                              />
+                            </div>
+                            {state.noLocationFound && (
+                              <span className="text-center w-full text-sm text-red-500">
+                                No location found
+                              </span>
+                            )}
+                            {state.locations?.map((location) => (
+                              <li
+                                className={`pl-4 py-1 cursor-pointer hover:bg-white w-full truncate duration-300 ${
+                                  location.name
+                                    .toLocaleLowerCase()
+                                    .startsWith(
+                                      state.search.toLocaleLowerCase()
+                                    )
+                                    ? "block"
+                                    : "hidden"
+                                }
                             ${
                               state.selectedLocation == location.name
                                 ? "bg-white"
                                 : ""
                             }
                             `}
-                            key={location.name}
-                            onClick={() => {
-                              dispatch({
-                                type: "setSelectedLocation",
-                                payload: location.name,
-                              });
-                              dispatch({
-                                type: "setShowLocations",
-                                payload: false,
-                              });
-                              dispatch({
-                                type: "setSearch",
-                                payload: "",
-                              });
-                            }}
-                          >
-                            {location.name}
-                          </li>
-                        ))}
-                      </ul>
+                                key={location.name}
+                                onClick={() => {
+                                  dispatch({
+                                    type: "setSelectedLocation",
+                                    payload: location.name,
+                                  });
+                                  dispatch({
+                                    type: "setShowLocations",
+                                    payload: false,
+                                  });
+                                  dispatch({
+                                    type: "setSearch",
+                                    payload: "",
+                                  });
+                                }}
+                              >
+                                {location.name}
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/**Calender----------- */}
+
+                  <div className="booking-calender w-1/3 h-full  flex flex-col items-start justify-center gap-4 px-3  md:w-full">
+                    <div className="booking-calender-tile  flex justify-start items-center gap-3 text-secondary">
+                      <FontAwesomeIcon icon={faCalendarDays} />{" "}
+                      <span>Date</span>
+                    </div>
+
+                    {/**calender - Option -Select----------- */}
+                    <div
+                      className={`calendar-relative relative rounded-2xl border-2 border-primary  w-full  h-8 flex justify-center items-center  px-4 ${
+                        state.dateColorChange
+                          ? "text-primary"
+                          : "text-secondary"
+                      }`}
+                    >
+                      <FontAwesomeIcon
+                        className="calendar-icon absolute right-4  bottom-1/2 translate-y-1/2 text-lg pointer-events-none cursor-pointer "
+                        icon={faCalendar}
+                      />
+                      <input
+                        id="date"
+                        onChange={(e) => {
+                          dispatch({
+                            type: "setDate",
+                            payload: e.target.value,
+                          });
+                          dispatch({
+                            type: "setDateColorChange",
+                            payload: true,
+                          });
+                        }}
+                        value={state.date}
+                        className={`bg-transparent outline-none w-full text-sm  pt-[3px] `}
+                        type="date"
+                      />
+                    </div>
+                  </div>
+
+                  {/**Persons----------- */}
+
+                  <div className="booking-Persons w-1/3 h-full  flex flex-col items-start justify-center gap-4 px-3  md:w-full">
+                    <div className="booking-Persons-tile  flex justify-start items-center gap-3 text-secondary">
+                      <FontAwesomeIcon icon={faPeopleGroup} />{" "}
+                      <span>Total persons</span>
+                    </div>
+
+                    {/**Persons - Option -Select----------- */}
+                    <div className="input-persons-number rounded-2xl border-2 border-primary  w-full h-8  flex justify-between items-center gap-4 px-4">
+                      <input
+                        onChange={(e) => {
+                          dispatch({
+                            type: "setPersonsNum",
+                            payload: parseInt(e.target.value),
+                          });
+                          dispatch({
+                            type: "setPersonsNumChange",
+                            payload: true,
+                          });
+                        }}
+                        value={state.personsNum}
+                        className={` outline-none bg-transparent w-1/2 ${
+                          state.personsNumChange
+                            ? "text-primary"
+                            : "text-secondary"
+                        }`}
+                        type="number"
+                      />
+
+                      {/**persons-controls */}
+                      <div className="persons-controls w-1/2  flex justify-end items-center gap-6">
+                        <span
+                          onClick={() => {
+                            dispatch({
+                              type: "setDecreasePersonsNum",
+                            });
+                            dispatch({
+                              type: "setPersonsNumChange",
+                              payload: true,
+                            });
+                          }}
+                          className={`decrement rounded-full  text-bg flex justify-center items-center w-[22px] h-[22px] min-w-[22px] min-h-[22px] font-bold text-lg cursor-pointer ${
+                            state.personsNum == 1
+                              ? "bg-secondary pointer-events-none"
+                              : "bg-primary"
+                          }`}
+                        >
+                          -
+                        </span>
+                        <span
+                          onClick={() => {
+                            dispatch({
+                              type: "setIncreasePersonsNum",
+                            });
+                            dispatch({
+                              type: "setPersonsNumChange",
+                              payload: true,
+                            });
+                          }}
+                          className="increment rounded-full bg-primary text-bg flex justify-center items-center w-[22px] h-[22px] min-w-[22px] min-h-[22px] font-bold text-lg cursor-pointer"
+                        >
+                          +
+                        </span>
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
 
-              {/**Calender----------- */}
-
-              <div className="booking-calender w-1/3 h-full bg-bg flex flex-col items-start justify-center gap-4 px-5 ">
-                <div className="booking-calender-tile  flex justify-start items-center gap-3 text-secondary">
-                  <FontAwesomeIcon icon={faCalendarDays} /> <span>Date</span>
-                </div>
-
-                {/**calender - Option -Select----------- */}
-                <div
-                  className={`calendar-relative relative rounded-2xl border-2 border-primary  w-full  h-8 flex justify-center items-center  px-4 ${
-                    state.dateColorChange ? "text-primary" : "text-secondary"
-                  }`}
-                >
-                  <FontAwesomeIcon
-                    className="calendar-icon absolute right-4  bottom-1/2 translate-y-1/2 text-lg pointer-events-none cursor-pointer "
-                    icon={faCalendar}
-                  />
-                  <input
-                    id="date"
-                    onChange={(e) => {
-                      dispatch({
-                        type: "setDate",
-                        payload: e.target.value,
-                      });
-                      dispatch({
-                        type: "setDateColorChange",
-                        payload: true,
-                      });
-                    }}
-                    value={state.date}
-                    className={`bg-transparent outline-none w-full `}
-                    type="date"
-                  />
-                </div>
+              {/**Right booking-options-cta- ----------- */}
+              <div className="booking-btn w-48 amd:w-full h-full bg-accent flex flex-col items-center justify-center gap-5  text-bg cursor-pointer duration-300 hover:opacity-90  amd:h-32 md:h-[85px]  ">
+                <FontAwesomeIcon className="text-2xl" icon={faCalendarCheck} />
+                <p>Book Now</p>
               </div>
-
-              {/**Persons----------- */}
-
-              <div className="booking-Persons w-1/3 h-full bg-bg flex flex-col items-start justify-center gap-4 px-5 ">
-                <div className="booking-Persons-tile  flex justify-start items-center gap-3 text-secondary">
-                  <FontAwesomeIcon icon={faPeopleGroup} />{" "}
-                  <span>Total persons</span>
-                </div>
-
-                {/**Persons - Option -Select----------- */}
-                <div className="input-persons-number rounded-2xl border-2 border-primary  w-full h-8  flex justify-between items-center gap-4 px-4">
-                  <input
-                    onChange={(e) => {
-                      dispatch({
-                        type: "setPersonsNum",
-                        payload: parseInt(e.target.value),
-                      });
-                      dispatch({
-                        type: "setPersonsNumChange",
-                        payload: true,
-                      });
-                    }}
-                    value={state.personsNum}
-                    className={` outline-none bg-transparent w-1/2 ${
-                      state.personsNumChange ? "text-primary" : "text-secondary"
-                    }`}
-                    type="number"
-                  />
-
-                  {/**persons-controls */}
-                  <div className="persons-controls w-1/2  flex justify-end items-center gap-6">
-                    <span
-                      onClick={() => {
-                        dispatch({
-                          type: "setDecreasePersonsNum",
-                        });
-                        dispatch({
-                          type: "setPersonsNumChange",
-                          payload: true,
-                        });
-                      }}
-                      className={`decrement rounded-full  text-bg flex justify-center items-center w-[22px] h-[22px] font-bold text-lg cursor-pointer ${
-                        state.personsNum == 1
-                          ? "bg-secondary pointer-events-none"
-                          : "bg-primary"
-                      }`}
-                    >
-                      -
-                    </span>
-                    <span
-                      onClick={() => {
-                        dispatch({
-                          type: "setIncreasePersonsNum",
-                        });
-                        dispatch({
-                          type: "setPersonsNumChange",
-                          payload: true,
-                        });
-                      }}
-                      className="increment rounded-full bg-primary text-bg flex justify-center items-center w-[22px] h-[22px] font-bold text-lg cursor-pointer"
-                    >
-                      +
-                    </span>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className="booking-btn w-48 h-full bg-accent flex flex-col items-center justify-center gap-5 rounded-tr-[100px] text-bg cursor-pointer duration-300 hover:opacity-90">
-              <FontAwesomeIcon className="text-2xl" icon={faCalendarCheck} />
-              <p>Book Now</p>
             </div>
           </div>
         </div>
