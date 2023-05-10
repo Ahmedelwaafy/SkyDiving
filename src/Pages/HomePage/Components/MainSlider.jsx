@@ -1,6 +1,6 @@
 import { faChevronRight } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Slider from "react-slick";
 
 function MainSlider() {
@@ -184,15 +184,57 @@ function MainSlider() {
         "Experience the thrill of a lifetime and combine it with a journey through history by embarking on a skydiving adventure in Egypt.",
     },
   ];
+
+  const sliderTitle = useRef(null);
+  const arrows = useRef(null);
+  const mainSlider = useRef(null);
+  const options = {
+    root: null,
+    rootMargin: "-150px 0px ",
+    threshold: 0,
+  };
+  function handleIntersect(entries) {
+    entries.map((entry) => {
+      if (entry.target.classList.contains("above-slider-observer")) {
+        if (!entry.isIntersecting) {
+          entry.target.classList.remove("above-slider-visible");
+        } else {
+          entry.target.classList.add("above-slider-visible");
+        }
+      } else if (entry.target.classList.contains("main-slider")) {
+        if (!entry.isIntersecting) {
+          entry.target.classList.remove("main-slider-visible");
+        } else {
+          entry.target.classList.add("main-slider-visible");
+        }
+      }
+    });
+  }
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(handleIntersect, options);
+    observer.observe(sliderTitle.current);
+    observer.observe(arrows.current);
+    observer.observe(mainSlider.current);
+  }, []);
+
   return (
     <section className="relative z-20 min-h-screen w-full h-auto pt-32 amd:pt-44 md:pt-64 pb-40 bg-bg  ">
       <div className="flex-col items-center h-full slider-container width">
         <div className="flex items-center justify-between sm:justify-center full sm my-14 slider-title-arrows ">
-          <h2 className="text-3xl font-bold text-accent ">Best Offers</h2>
-          <div className="flex items-center justify-end gap-5 slider-arrows sm:hidden">
+          <h2
+            ref={sliderTitle}
+            className="above-slider-observer main-slider-title text-3xl font-bold text-accent "
+          >
+            Best Offers
+          </h2>
+          <div
+            ref={arrows}
+            className="above-slider-observer main-slider-arrows flex items-center justify-end gap-5 slider-arrows sm:hidden"
+          >
             <div
               onClick={() => slider.current.slickPrev()}
-              className="flex items-center justify-center w-10 h-10 duration-300 rounded-l-full cursor-pointer slider-prev bg-accent text-bg hover:opacity-90 active:scale-90"
+              className="   flex items-center justify-center w-10 h-10 duration-300 rounded-l-full cursor-pointer slider-prev bg-accent text-bg hover:opacity-90 active:scale-90"
             >
               <FontAwesomeIcon
                 className="text-lg font-bold rotate-180"
@@ -201,7 +243,7 @@ function MainSlider() {
             </div>
             <div
               onClick={() => slider.current.slickNext()}
-              className="flex items-center justify-center w-10 h-10 duration-300 rounded-r-full cursor-pointer slider-prev bg-accent text-bg hover:opacity-90 active:scale-90"
+              className=" flex items-center justify-center w-10 h-10 duration-300 rounded-r-full cursor-pointer slider-prev bg-accent text-bg hover:opacity-90 active:scale-90"
             >
               <FontAwesomeIcon
                 className="text-lg font-bold "
@@ -210,49 +252,50 @@ function MainSlider() {
             </div>
           </div>
         </div>
-
-        <Slider ref={slider} {...settings}>
-          {offers.map((offer) => (
-            <div
-              key={offer.people}
-              className="slide-wrapper-relative relative w-[350px] max-w-[350px] sm:w-[300px] sm:max-w-[300px] h-[420px]    overflow-hidden rounded-[70px] group"
-            >
-              <div className="w-full h-full slide-img-wrapper ">
-                <img
-                  className="object-cover w-full h-full object-top group-hover:scale-110 duration-300"
-                  src={offer.img}
-                  alt={offer.img}
-                />
-              </div>
+        <div ref={mainSlider} className="main-slider">
+          <Slider ref={slider} {...settings}>
+            {offers.map((offer) => (
               <div
-                onClick={() => setPush(!push)}
-                className={`slide-content-absolute absolute bottom-8 sm:bottom-0 w-3/4 sm:w-full h-3/4 sm:h-4/6  bg-secondary right-1/2 translate-x-1/2 rounded-[50px] translate-y-[47%]  sm:translate-y-[0%] transition-all duration-300 ease-in-out group-hover:translate-y-0 flex flex-col items-start justify-start p-6 gap-4 text-white`}
+                key={offer.people}
+                className="slide-wrapper-relative relative w-[350px] max-w-[350px] sm:w-[300px] sm:max-w-[300px] h-[420px]    overflow-hidden rounded-[70px] group"
               >
-                <p className="text-sm tracking-wider slide-location font-cursive">
-                  {offer.location}
-                </p>
-                <h4 className="w-full font-bold truncate slide-title font-sub-heading text-accent">
-                  {" "}
-                  {offer.title}
-                </h4>
-                <div className="flex items-center justify-between w-full slide-date-people">
-                  <p className="text-sm font-body">{offer.date}</p>
-                  <p className="text-sm font-body">
-                    {offer.people} Participants
+                <div className="w-full h-full slide-img-wrapper ">
+                  <img
+                    className="object-cover w-full h-full object-top group-hover:scale-110 duration-300"
+                    src={offer.img}
+                    alt={offer.img}
+                  />
+                </div>
+                <div
+                  onClick={() => setPush(!push)}
+                  className={`slide-content-absolute absolute bottom-8 sm:bottom-0 w-3/4 sm:w-full h-3/4 sm:h-4/6  bg-secondary right-1/2 translate-x-1/2 rounded-[50px] translate-y-[47%]  sm:translate-y-[0%] transition-all duration-300 ease-in-out group-hover:translate-y-0 flex flex-col items-start justify-start p-6 gap-4 text-white`}
+                >
+                  <p className="text-sm tracking-wider slide-location font-cursive">
+                    {offer.location}
                   </p>
-                </div>
-                <div className="w-full overflow-hidden text-sm slide-description text-ellipsis whitespace-break-spaces font-body">
-                  {offer.description.substring(0, 65)} ...
-                </div>
-                <div className="flex items-center justify-center w-full slider-btn-wrapper h-fit">
-                  <button className="px-10 py-3 border-2 rounded-full hero-cta bg-accent border-bg text-bg">
-                    Book Now{" "}
-                  </button>
+                  <h4 className="w-full font-bold truncate slide-title font-sub-heading text-accent">
+                    {" "}
+                    {offer.title}
+                  </h4>
+                  <div className="flex items-center justify-between w-full slide-date-people">
+                    <p className="text-sm font-body">{offer.date}</p>
+                    <p className="text-sm font-body">
+                      {offer.people} Participants
+                    </p>
+                  </div>
+                  <div className="w-full overflow-hidden text-sm slide-description text-ellipsis whitespace-break-spaces font-body">
+                    {offer.description.substring(0, 65)} ...
+                  </div>
+                  <div className="flex items-center justify-center w-full slider-btn-wrapper h-fit">
+                    <button className="px-10 py-3 border-2 rounded-full hero-cta bg-accent border-bg text-bg">
+                      Book Now{" "}
+                    </button>
+                  </div>
                 </div>
               </div>
-            </div>
-          ))}
-        </Slider>
+            ))}
+          </Slider>
+        </div>
       </div>
     </section>
   );

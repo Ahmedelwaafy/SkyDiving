@@ -11,12 +11,36 @@ import {
   faPlaneUp,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 
 function Footer() {
+  const footer = useRef(null);
+  const options = {
+    root: null,
+    rootMargin: "-150px 0px ",
+    threshold: 0,
+  };
+  function handleIntersect(entries) {
+    entries.map((entry) => {
+      if (!entry.isIntersecting) {
+        entry.target.classList.remove("footer-visible");
+      } else {
+        entry.target.classList.add("footer-visible");
+      }
+    });
+  }
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(handleIntersect, options);
+    observer.observe(footer.current);
+  }, []);
   return (
-    <div className="footer-background-bg bg-bg z-30 w-full h-auto">
-      <footer className="relative  bg-secondary w-full h-auto text-bg pb-20 pt-32 rounded-t-[100px]">
+    <div className="footer-background-bg bg-bg z-40 w-full h-auto">
+      <footer
+        ref={footer}
+        className="relative z-30 bg-secondary w-full h-auto text-bg pb-20 pt-32 rounded-t-[100px]"
+      >
         <div className="footer-content-grid grid-auto-fit h-full ">
           <div className="footer-col1-logo  h-full flex flex-col gap-7 alg:items-center">
             <div className="logo  flex items-center justify-start md:justify-center gap-2 text-lg font-bold cursor-pointer duration-300 hover:scale- ">

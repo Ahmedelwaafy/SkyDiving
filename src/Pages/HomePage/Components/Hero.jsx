@@ -9,7 +9,7 @@ import {
   faPeopleGroup,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useEffect, useReducer } from "react";
+import { useEffect, useReducer, useRef } from "react";
 
 function Hero() {
   function reducer(state, action) {
@@ -101,6 +101,33 @@ function Hero() {
     personsNum: 1,
     personsNumChange: false,
   });
+  const ref = useRef([]);
+  const pushRef = (el) => ref.current.push(el);
+
+  const options = {
+    root: null,
+    rootMargin: "-170px 0px 150px 0px",
+    threshold: 0,
+  };
+  function handleIntersect(entries, observer) {
+    entries.map((entry) => {
+      if (entry.target.classList.contains("titles-observer")) {
+        if (!entry.isIntersecting) {
+          entry.target.classList.remove("visible");
+        } else {
+          entry.target.classList.add("visible");
+        }
+      } else if (entry.target.classList.contains("btn-form-observer")) {
+        if (!entry.isIntersecting) {
+          
+          entry.target.classList.remove("visible");
+        } else {
+          
+          entry.target.classList.add("visible");
+        }
+      }
+    });
+  }
   useEffect(() => {
     try {
       fetch("https://restcountries.com/v2/all?fields=name")
@@ -114,6 +141,13 @@ function Hero() {
     } catch (error) {
       console.log(error);
     }
+    //console.log(title.current);
+    let uniqueRefs = [...new Set(ref.current)];
+
+    if (ref.current) console.log(ref.current);
+    if (ref.current) console.log(uniqueRefs);
+    const observer = new IntersectionObserver(handleIntersect, options);
+    uniqueRefs.map((ref) => observer.observe(ref));
   }, []);
 
   function handleSearchChange(e) {
@@ -137,6 +171,7 @@ function Hero() {
       }
     }
   }
+
   return (
     <div
       className="h-screen min-h-screen relative lg:h-[110vh] amd:h-[115vh] md:h-[135vh]  w-full pt-20 flex
@@ -150,32 +185,44 @@ function Hero() {
           {" "}
           SkyDiving
         </h3>
-
-        <div className="heading-wrapper overflow-hidden  ">
+        <div className="heading-wrapper   ">
           <h1
-            className="font-black text-7xl asm:text-5xl sm:text-3xl text-bg z-10 relative 
+            ref={pushRef}
+            className="hero-title hide titles-observer font-black text-7xl asm:text-5xl sm:text-3xl text-bg z-10 relative 
           pointer-events-none "
           >
             Ready. Set. GO!
           </h1>
         </div>
-        <div className="sub-heading-wrapper overflow-hidden w-3/5 lg:w-4/5 md:w-full">
+        <div className="sub-heading-wrapper  w-3/5 lg:w-4/5 md:w-full">
           <h2
-            className="font-black text-4xl lg:text-3xl md:text-2xl sm:text-xl text-center font-sub-heading  text-bg z-10 relative italic  pointer-events-none
+            ref={pushRef}
+            className="hero-sub-title hide titles-observer font-black text-4xl lg:text-3xl md:text-2xl sm:text-xl text-center font-sub-heading  text-bg z-10 relative italic  pointer-events-none
           "
           >
-            READY TO FEEL ON TOP OF THE WORLD? WE CAN HELP YOU WITH THAT.
+            READY TO FEEL ON TOP OF THE WORLD?{" "}
+            <span
+              ref={pushRef}
+              className="hero-sub-title-span hide titles-observer "
+            >
+              WE CAN HELP YOU WITH THAT.
+            </span>
           </h2>
         </div>
-        <div className="cta-wrapper">
-          <button className="hero-cta mt-5 px-7 py-4 bg-accent border-2 border-bg text-bg rounded-t-full">
+        <div className="cta-wrapper ">
+          <button
+            ref={pushRef}
+            className="hero-cta btn-delay btn-form-observer mt-5 px-7 py-4 bg-accent border-2 border-bg text-bg rounded-t-full"
+          >
             Discover Plans
           </button>
         </div>
-
         {/**Booking ------------*/}
-        <div className="booking w-5/6 mx-auto h-40 xl:h-48 amd:h-72 md:h-fit translate-y-1/2 z-40    absolute bottom-0 ">
-          <div className="booking-relative-for-filter relative w-full h-full   ">
+        <div className="booking  w-5/6 mx-auto h-40 xl:h-48 amd:h-72 md:h-fit translate-y-1/2 z-40    absolute bottom-0 ">
+          <div
+            ref={pushRef}
+            className="booking-relative-for-filter btn-form-observer form-delay relative w-full h-full   "
+          >
             {/**filter ----------- */}
             <div className="filter-absolute absolute rounded-t-[100px]  h-20 w-80 sm:w-full left-0 top-0 -translate-y-[100%]  flex justify-between items-center overflow-hidden">
               <button
@@ -456,7 +503,7 @@ function Hero() {
           </div>
         </div>
       </section>
-      <div className="overlay fixed w-full h-full inset-0 bg-bg/10 z-[-2]"></div>
+      <div className="overlay fixed w-full h-full inset-0 bg-accent/50 z-[-2]"></div>
       <video
         className="fixed inset-0 h-full w-full object-cover z-[-3] "
         src="https://firebasestorage.googleapis.com/v0/b/dtd-blog-8bed5.appspot.com/o/skydiving.mp4?alt=media&token=2883d31d-4ee5-41b8-8a2c-6630a7081b87"
