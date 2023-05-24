@@ -86,8 +86,9 @@ function Hero() {
           personsNum: state.personsNum - 1,
         };
       }
+      default:
+        throw Error("Unknown action: " + action.type);
     }
-    throw Error("Unknown action: " + action.type);
   }
   const [state, dispatch] = useReducer(reducer, {
     filter: "single",
@@ -119,10 +120,8 @@ function Hero() {
         }
       } else if (entry.target.classList.contains("btn-form-observer")) {
         if (!entry.isIntersecting) {
-          
           entry.target.classList.remove("visible");
         } else {
-          
           entry.target.classList.add("visible");
         }
       }
