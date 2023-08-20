@@ -264,6 +264,8 @@ function MainSlider() {
                     className="object-cover w-full h-full object-top group-hover:scale-110 duration-300"
                     src={offer.img}
                     alt={offer.img}
+                    loading="lazy"
+                    
                   />
                 </div>
                 <div
